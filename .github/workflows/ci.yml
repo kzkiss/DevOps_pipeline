@@ -24,4 +24,7 @@ jobs:
         run: npm test
 
       - name: Build Docker image
-      - run: docker build -t devops-demo .
+        run: docker build -t devops-demo
+
+      - name: Simulate deployment
+        run: echo "Deploying application..."
