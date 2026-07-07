@@ -3,6 +3,9 @@ services:
     build: .
     container_name: lightweight-backend-api
 
+    command: >
+      sh -c "pwd && ls -la && python -c 'import os; print(os.getcwd())' && uvicorn main:app --host 0.0.0 --port 8000"
+
     ports:
       - "8000:8000"
 
