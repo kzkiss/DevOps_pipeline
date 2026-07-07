@@ -7,13 +7,13 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 #Set working directoty
-WORKDIR /app
+WORKDIR /
 
 #copy and install dependencies
-COPY app/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY app/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-COPY app/ .
+COPY app /app
 
 #Expose FastAPI port
 EXPOSE 8000
