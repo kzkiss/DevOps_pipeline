@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from app.main import app
+from main import app
 
 #using TestClient to simulate user requests without a web server
 client = TestClient(app)
