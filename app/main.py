@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes.api import router
+from routes.api import router
 
 app = FastAPI(
     title="Lightweight backend API",
