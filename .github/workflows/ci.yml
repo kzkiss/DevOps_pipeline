@@ -33,7 +33,7 @@ jobs:
         run: |
           export PYTHONPATH=$GITHUB_WORKSPACE
           pytest -v app/tests
-          
+
       - name: Build Docker image
         run: |
           docker build -t lightweight-devops-pipeline .
@@ -41,6 +41,14 @@ jobs:
       - name: Deploy application
         run: |
           docker compose up --build -d
+        
+      - name: Show running containers
+        run: |
+          docker ps -a
+
+      - name: Show container logs
+        run: |
+          docker compose logs
 
       - name: Verify deployment
         run: |
