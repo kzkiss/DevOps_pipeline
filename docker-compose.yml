@@ -1,11 +1,12 @@
-version: "3.9"
-
 services:
   api:
     build: .
-    container_name: lightweight-devops-pipeline
+    container_name: lightweight-backend-api
 
     ports:
       - "8000:8000"
+
+    environment:
+      - APP_VERSION: "1.0.0"
 
     restart: unless-stopped
