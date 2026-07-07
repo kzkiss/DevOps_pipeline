@@ -24,12 +24,21 @@ def test_version():
 
 def test_tasks():
     response = client.get("/tasks") # simulates a GET request to the tasks endpoint
+    
+    print(response.status_code) #prints the response status code for debugging purposes
+    print(response.json()) #prints the response JSON for debugging purposes
+
     assert response.status_code == 200 #checks response status code is 200 (OK)
     tasks = response.json()
     assert len(tasks) == 2 #check number of tasks, should return 2 as expected
 
 def test_get_single_task():
     response = client.get("/tasks/1") # simulates a GET request to the tasks endpoint with id 1
+    
+    
+    print(response.status_code) #prints the response status code for debugging purposes
+    print(response.json()) #prints the response JSON for debugging purposes
+
     assert response.status_code == 200 #checks response status code is 200 (OK)
     task = response.json()
     assert task["id"] == 1 #check correct task id
