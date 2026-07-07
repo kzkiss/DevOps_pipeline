@@ -4,6 +4,6 @@ from routes.api import router
 app = FastAPI(
     title="Lightweight backend API",
     description="A simple API for demonstration purposes for DevOps pipeline.",
-    version="1.0.0"
+    version="1.0.1"
 )
 app.include_router(router)
