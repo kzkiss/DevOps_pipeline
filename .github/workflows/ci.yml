@@ -24,7 +24,7 @@ jobs:
           pip install -r requirements.txt
       
       - name: Run automated tests
-        working-directory: ./Demo/app
+        working-directory: ./app
         run: |
           pytest -v
 
