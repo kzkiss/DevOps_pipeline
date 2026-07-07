@@ -14,7 +14,7 @@ def test_health():
     response = client.get("/health") # simulates a GET request to the health endpoint
     assert response.status_code == 200 #checks if the response status code is 200 (OK)
     data = response.json()
-    assert data["healthy"] == True #verifies the returned JSON, healthy equals True
+    assert data["healthy"] #verifies the returned JSON
 
 def test_version():
     response = client.get("/version") # simulates a GET request to the version endpoint
