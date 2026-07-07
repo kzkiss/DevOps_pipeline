@@ -31,8 +31,9 @@ jobs:
       
       - name: Run automated tests
         run: |
-          pytest -v
-
+          export PYTHONPATH=$GITHUB_WORKSPACE
+          pytest -v app/tests
+          
       - name: Build Docker image
         run: |
           docker build -t lightweight-devops-pipeline .
