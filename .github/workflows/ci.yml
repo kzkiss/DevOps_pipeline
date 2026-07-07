@@ -29,10 +29,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       
-      - name: Run automated tests
+      - name: Debug Python environment
         working-directory: ./app
         run: |
-          pytest -v
+          python -c "import os; print('cwd=', os.getcwd())"
+          python -c "import sys; print('\n'.join(sys.path))"
+          python -c "import importlib.util; print(importlib.util.find_spec('main'))"
+
+      - name: Run automated tests
+        run: |
+          export PYTHONPATH=$GITHUB_WORKSPACE/app
+          pytest -v app/tests
 
       - name: Build Docker image
         run: |
