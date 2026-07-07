@@ -18,13 +18,13 @@ jobs:
           python-version: '3.12'      
 
       - name: Install Python dependencies
-        working-directory: ./app
+        working-directory: ./Demo/app
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       
       - name: Run automated tests
-        working-directory: ./app
+        working-directory: ./Demo/app
         run: |
           pytest -v
 
