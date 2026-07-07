@@ -50,10 +50,7 @@ jobs:
         run: |
           docker compose logs
 
-     # - name: Verify deployment
-      #  run: |
-       #   sleep 10
-        #  curl http://localhost:8000/health 
+     
       - name: Wait for container
         run: |
           sleep 5
@@ -69,3 +66,10 @@ jobs:
       - name: Test health endpoint
         run: |
           curl -v http://127.0.0.1:8000/health
+
+      - name: Verify deployment
+        run: |
+          docker exec lightweight-backend-api python -c "
+          import urllib.request
+          print (urllib.request.urlopen('http://localhost:8000/health').read())
+          "
