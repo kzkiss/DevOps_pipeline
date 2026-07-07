@@ -32,6 +32,12 @@ jobs:
         run: |
           docker build -t lightweight-devops-pipeline .
 
-      - name: Simulate deployment
+      - name: Deploy application
         run: |
-          echo "Deploying application..."
+          docker compose up --build -d
+
+      - name: Verify deployment
+        run: |
+          sleep 10
+          curl http://localhost:8000/health 
+          
