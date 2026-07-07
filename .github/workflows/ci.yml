@@ -50,7 +50,22 @@ jobs:
         run: |
           docker compose logs
 
-      - name: Verify deployment
+     # - name: Verify deployment
+      #  run: |
+       #   sleep 10
+        #  curl http://localhost:8000/health 
+      - name: Wait for container
         run: |
-          sleep 10
-          curl http://localhost:8000/health 
+          sleep 5
+
+      - name: Show running containers
+        run: |
+          docker ps -a
+      
+      - name: Show application logs
+        run: |
+          docker logs lightweight-backend-api
+
+      - name: Test health endpoint
+        run: |
+          curl -v http://127.0.0.1:8000/health
