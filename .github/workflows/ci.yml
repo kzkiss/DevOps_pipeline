@@ -12,12 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug project structure
-        run: |
-          pwd
-          ls -R
-          python -c "import sys; print(sys.path)"
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -28,18 +22,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      
-      - name: Debug Python environment
-        working-directory: ./app
-        run: |
-          python -c "import os; print('cwd=', os.getcwd())"
-          python -c "import sys; print('\n'.join(sys.path))"
-          python -c "import importlib.util; print(importlib.util.find_spec('main'))"
 
+      - name: Run code quality checks
+        run: |
+          ruff check app
+      
       - name: Run automated tests
         run: |
           export PYTHONPATH=$GITHUB_WORKSPACE/app
-          pytest -v app/tests
+          pytest --cov=app --cov-report=term-missing app/tests
 
       - name: Build Docker image
         run: |
@@ -49,34 +40,10 @@ jobs:
         run: |
           docker compose up --build -d
         
-      - name: Show running containers
-        run: |
-          docker ps -a
-
-      - name: Show container logs
-        run: |
-          docker compose logs
-
-     
       - name: Wait for container
         run: |
           sleep 5
 
-      - name: Show running containers
-        run: |
-          docker ps -a
-      
-      - name: Show application logs
-        run: |
-          docker logs lightweight-backend-api
-
-      - name: Test health endpoint
+      - name: Verify Deployment
         run: |
           curl -v http://127.0.0.1:8000/health
-
-      - name: Verify deployment
-        run: |
-          docker exec lightweight-backend-api python -c "
-          import urllib.request
-          print (urllib.request.urlopen('http://localhost:8000/health').read())
-          "
