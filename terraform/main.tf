@@ -96,3 +96,22 @@ output "instance_ip" {
     value = aws_instance.api.public_ip
 }
 
+#create elastic IP
+resource "aws_eip" "api" {
+    domain = "vpc"
+
+    tags = {
+        Name = "lw-devops-pipeline-eip"
+    }
+}
+
+#associate elastic IP with instance
+resource "aws_eip_association" "api" {
+    instance_id   = aws_instance.api.id
+    allocation_id = aws_eip.api.id
+}
+
+#elastic IP output
+output "api_public_ip" {
+    value = aws_eip.api.public_ip
+}
