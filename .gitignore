@@ -22,11 +22,6 @@ terraform.rc
 #VS Code settings
 .vscode/
 
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
-
 #Keep lock file
 !.terraform.lock.hcl
 

@@ -80,8 +80,8 @@ resource "aws_security_group" "api" {
 
 #create ec2 instance
 resource "aws_instance" "api" {
-    ami = "ami-0c2b8ca1dad447f8a"
-    instance_type = "t2.micro"
+    ami = "ami-0044a84051c9d8748"
+    instance_type = "t3.micro"
     subnet_id = aws_subnet.public.id
     vpc_security_group_ids = [
         aws_security_group.api.id
