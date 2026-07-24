@@ -78,23 +78,8 @@ resource "aws_security_group" "api" {
   }
 }
 
-#create ec2 instance
-resource "aws_instance" "api" {
-  ami           = "ami-0044a84051c9d8748"
-  instance_type = "t3.micro"
-  subnet_id     = aws_subnet.public.id
-  vpc_security_group_ids = [
-    aws_security_group.api.id
-  ]
-  tags = {
-    name = "lw-devops-pipeline-api"
-  }
-}
 
-#create output
-output "instance_ip" {
-  value = aws_instance.api.public_ip
-}
+
 
 #create elastic IP
 resource "aws_eip" "api" {
@@ -114,4 +99,32 @@ resource "aws_eip_association" "api" {
 #elastic IP output
 output "api_public_ip" {
   value = aws_eip.api.public_ip
+}
+
+#create ec2 instance, initialise docker on instance
+resource "aws_instance" "api" {
+  ami           = "ami-0044a84051c9d8748"
+  instance_type = "t3.micro"
+  subnet_id     = aws_subnet.public.id
+  vpc_security_group_ids = [
+    aws_security_group.api.id
+  ]
+
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
+
+  user_data = <<-EOF
+                #!/bin/bash
+                apt-get update
+                apt-get install -y docker.io
+                systemctl start docker
+                systemctl enable docker
+                usermod -aG docker ubuntu
+
+                EOF
+
+
+
+  tags = {
+    Name = "lw-devops-pipeline-api"
+  }
 }
