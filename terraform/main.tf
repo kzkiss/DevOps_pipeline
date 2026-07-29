@@ -59,12 +59,6 @@ resource "aws_security_group" "api" {
   description = "Allow HTTP and SSH"
   vpc_id      = aws_vpc.main.id
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
     from_port   = 8000
     to_port     = 8000
     protocol    = "tcp"
@@ -109,7 +103,7 @@ resource "aws_instance" "api" {
   vpc_security_group_ids = [
     aws_security_group.api.id
   ]
-
+  #permission for EC2 to communicate with System Manager
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
   user_data = <<-EOF
@@ -120,8 +114,11 @@ resource "aws_instance" "api" {
                 systemctl enable docker
                 usermod -aG docker ubuntu
 
-                EOF
+                snap install amazon-ssm-agent  --classic
+                systemctl enable snap.amazon-ssm-agent.amazon-ssm-agent.service
+                systemctl start snap.amazon-ssm-agent.amazon-ssm-agent.service
 
+                EOF
 
 
   tags = {

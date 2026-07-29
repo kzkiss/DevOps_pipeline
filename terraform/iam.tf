@@ -1,6 +1,6 @@
 #IAM role permission for EC2 to access ECR
 resource "aws_iam_role" "ec2_role" {
-  name        = "lw-devops-pipeline-ec2-ecr-role"
+  name = "lw-devops-pipeline-ec2-ecr-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
