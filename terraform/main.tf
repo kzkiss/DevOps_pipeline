@@ -97,7 +97,7 @@ output "api_public_ip" {
 
 #create ec2 instance, initialise docker on instance
 resource "aws_instance" "api" {
-  ami           = "ami-0044a84051c9d8748"
+  ami           = "ami-062a278d4dadf6e7f"
   instance_type = "t3.micro"
   subnet_id     = aws_subnet.public.id
   vpc_security_group_ids = [
