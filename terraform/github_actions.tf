@@ -55,7 +55,7 @@ resource "aws_iam_role" "github_actions" {
           }
 
           StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo: kzkiss/DevOps_pipeline:*"
+            "token.actions.githubusercontent.com:sub" = "repo:kzkiss/DevOps_pipeline:*"
           }
         }
       }
