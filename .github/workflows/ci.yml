@@ -12,6 +12,9 @@ jobs:
   CI:
     runs-on: ubuntu-latest
 
+    env:
+      ECR_REPOSITORY: lw-devops-pipeline
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
