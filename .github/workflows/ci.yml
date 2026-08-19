@@ -88,10 +88,12 @@ jobs:
             --parameters 'commands=[
               "aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}",
               "docker pull ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}",
+              "CURRENT=$(cat /opt/current_version 2>/dev/null || echo '')",
+              "echo $CURRENT | sudo tee /opt/previous_version",
               "docker stop lightweight-backend-api || true",
-              "docker stop lightweight-backend-api) || true",
               "docker rm lightweight-backend-api || true",
               "docker run -d --name lightweight-backend-api -p 8000:8000 ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}"
+              "echo ${{ env.IMAGE_TAG }} | sudo tee /opt/current_version"
             ]'
             
 
