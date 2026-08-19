@@ -103,7 +103,7 @@ jobs:
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids ${{ vars.EC2_INSTANCE_ID }} \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["curl --fail http://localhost:8000/health"]' \
+            --parameters 'commands=["curl --fail http://localhost:8000/health-test-failure"]' \
             --region ${{ env.AWS_REGION }} \
             --query "Command.CommandId" \
             --output text)
