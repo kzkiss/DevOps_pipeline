@@ -91,7 +91,7 @@ jobs:
               "docker stop lightweight-backend-api || true",
               "docker stop lightweight-backend-api) || true",
               "docker rm lightweight-backend-api || true",
-              "docker run -d --name lightweight-backend-api -p 8000:8000 ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest"
+              "docker run -d --name lightweight-backend-api -p 8000:8000 ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}"
             ]'
             
 
