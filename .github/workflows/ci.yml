@@ -51,7 +51,7 @@ jobs:
       - name: Build Docker image
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          docker build -t lightweight-devops-pipeline .
+          docker build -t lightweight-devops-pipeline:${{ env.IMAGE_TAG }} .
 
       - name: Configure AWS credentials
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
