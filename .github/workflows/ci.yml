@@ -166,7 +166,6 @@ jobs:
             --region ${{ env.AWS_REGION }} \
             --query "Command.CommandId" \
             --output text)
-            '
 
           echo "Rollback command ID: $COMMAND_ID"
 
