@@ -92,7 +92,7 @@ jobs:
               "echo $CURRENT | sudo tee /opt/previous_version",
               "docker stop lightweight-backend-api || true",
               "docker rm lightweight-backend-api || true",
-              "docker run -d --name lightweight-backend-api -p 8000:8000 ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}"
+              "docker run -d --name lightweight-backend-api -p 8000:8000 ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}",
               "echo ${{ env.IMAGE_TAG }} | sudo tee /opt/current_version"
             ]'
             
