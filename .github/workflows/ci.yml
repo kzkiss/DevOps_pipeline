@@ -121,6 +121,8 @@ jobs:
             --output text)
 
           if [ "$STATUS" != "Success" ]; then
-            echo "Smoke test failed! Deployment unsuccessful."
+            echo "Smoke test status: $STATUS"
+            echo "Smoke test response:"
+            echo "$OUTPUT"
             exit 1
           fi
