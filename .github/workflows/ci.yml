@@ -36,7 +36,7 @@ jobs:
       
       - name: Run security checks
         run: |
-          bandit -r app/
+          bandit -r app/ . -x app/tests
 
       - name: Run automated tests
         run: |
