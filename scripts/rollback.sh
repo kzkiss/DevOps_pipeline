@@ -3,7 +3,7 @@
 set -e
 
 IMAGE="207844652594.dkr.ecr.eu-west-2.amazonaws.com/lw-devops-pipeline"
-CONTAINER_NAME="lw-devops-pipeline"
+CONTAINER_NAME="lightweight-devops-pipeline"
 
 CURRENT=$(cat /opt/current_version)
 PREVIOUS=$(cat /opt/previous_version)
