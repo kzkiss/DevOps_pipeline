@@ -64,6 +64,22 @@ jobs:
           docker push \
             ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
 
+      - name: Deploy to AWS EC2 via SSM
+        run: |
+          aws ssm send-command \
+            --instance-ids ${{ vars.EC2_INSTANCE_ID }} \
+            --document-name "AWS-RunShellScript" \
+            --comment "Deploying lightweight-devops-pipeline" \
+            --parameters 'commands=[
+              "aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}",
+              "docker pull ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest",
+              "docker stop lightweight-backend-api || true",
+              "docker stop lightweight-backend-api) || true",
+              "docker rm lightweight-backend-api || true",
+              "docker run -d --name lightweight-backend-api -p 8000:8000 ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest"
+            ]'
+            
+
       #- name: Deploy application
       #  run: |
       #    docker compose up --build -d
