@@ -139,14 +139,13 @@ jobs:
           echo "Smoke test response:"
           echo "$OUTPUT"
 
-          if [ -n "$ERROR" ] && [ "$ERROR" != "None" ]; then
+          if [ "$STATUS" != "Success" ]; then
             echo "Smoke test error:"
             echo "$ERROR"
-          fi
-
-          echo "--------------------------------"
-
-          if [ "$STATUS" != "Success" ]; then
             echo "Smoke test failed! Deployment unsuccessful."
             exit 1
           fi
+
+          echo "Smoke test passed! Deployment successful."
+          echo "--------------------------------"
+
