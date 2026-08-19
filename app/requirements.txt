@@ -4,3 +4,4 @@ pytest
 httpx2
 pytest-cov
 ruff
+bandit

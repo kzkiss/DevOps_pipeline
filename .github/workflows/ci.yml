@@ -34,6 +34,10 @@ jobs:
         run: |
           ruff check app
       
+      - name: Run security checks
+        run: |
+          bandit -r app/
+
       - name: Run automated tests
         run: |
           export PYTHONPATH=$GITHUB_WORKSPACE/app
@@ -79,14 +83,6 @@ jobs:
               "docker run -d --name lightweight-backend-api -p 8000:8000 ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest"
             ]'
             
-
-      #- name: Deploy application
-      #  run: |
-      #    docker compose up --build -d
-        
-      #- name: Wait for container
-      #  run: |
-      #    sleep 5
 
       #- name: Verify Deployment
       #  run: |
