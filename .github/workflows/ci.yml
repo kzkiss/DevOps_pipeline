@@ -226,7 +226,7 @@ jobs:
 
           for i in {1..30}; do
               echo "=== Run $i ==="
-              start_time=$(date +%s%N)
+              start_time=$(date +%s.%N)
 
               pytest app/tests/test_api.py \
                   --durations=0 \
@@ -235,8 +235,8 @@ jobs:
 
               exit_code=$?
 
-              end_time=$(date +%s%N)
-              total=$(( (end_time - start_time) /1000000))
+              end_time=$(date +%s.%N)
+              total=$(python -c "print(round((float(end_time) - float(start_time)), 4))")
 
               if [ $exit_code -eq 0 ]; then
                   result="PASS"
