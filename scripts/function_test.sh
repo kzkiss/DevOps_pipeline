@@ -12,7 +12,7 @@ for i in {1..30}; do
     exit_code=$?
 
     end_time=$(date +%s%3N)
-    total=$(( (end_time - start_time) /1000000))
+    total=$(python -c "print(round((float(end_time) - float(start_time)), 4))")
 
     if [ $exit_code -eq 0 ]; then
         result="PASS"
