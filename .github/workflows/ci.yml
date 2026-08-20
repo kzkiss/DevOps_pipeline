@@ -105,7 +105,7 @@ jobs:
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids ${{ vars.EC2_INSTANCE_ID }} \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["curl --fail http://localhost:8000/health-test-failure"]' \
+            --parameters 'commands=["curl --fail http://localhost:8000/health"]' \
             --region ${{ env.AWS_REGION }} \
             --query "Command.CommandId" \
             --output text)
@@ -219,3 +219,33 @@ jobs:
           fi
 
           echo "Rollback successful! The application has been reverted to the previous stable version."
+
+      - name: Functional Test
+        run: |
+          echo "run,total,result" > func_test_result.csv
+
+          for i in {1..30}; do
+              echo "=== Run $i ==="
+              start_time=$(date +%s.%N)
+
+              pytest app/tests/test_api.py \
+                  --durations=0 \
+                  --durations-min=0 \
+                  > "pytest_run_$i.txt" 2>&1
+
+              exit_code=$?
+
+              end_time=$(date +%s.%N)
+              total=$(( (end_time - start_time) /1000000))
+
+              if [ $exit_code -eq 0 ]; then
+                  result="PASS"
+              else
+                  result="FAIL"
+              fi
+
+              echo "$i,$total,$result" >> func_test_result.csv
+
+              cat "pytest_run_$i.txt"
+
+          done
