@@ -222,7 +222,7 @@ jobs:
 
       - name: Test
         run: |
-          pytest app/tests/test_api.py
+          pytest ./app/tests/test_api.py
 
       - name: Functional Test
         run: |
@@ -233,7 +233,7 @@ jobs:
               start_time=$(date +%s.%N)
 
               set +e
-              pytest app/tests/test_api.py \
+              pytest ./app/tests/test_api.py \
                   --durations=0 \
                   --durations-min=0 \
                   > "pytest_run_$i.txt" 2>&1
