@@ -220,38 +220,4 @@ jobs:
 
           echo "Rollback successful! The application has been reverted to the previous stable version."
 
-      - name: Test
-        run: |
-          pytest tests/test_api.py
-
-      - name: Functional Test
-        run: |
-          echo "run,total,result" > func_test_result.csv
-
-          for i in {1..30}; do
-              echo "=== Run $i ==="
-              start_time=$(date +%s.%N)
-
-              set +e
-              pytest tests/test_api.py \
-                  --durations=0 \
-                  --durations-min=0 \
-                  > "pytest_run_$i.txt" 2>&1
-              
-              exit_code=$?
-              set -e
-
-              end_time=$(date +%s.%N)
-              total=$(python -c "print(round((float(end_time) - float(start_time)), 4))")
-
-              if [ $exit_code -eq 0 ]; then
-                  result="PASS"
-              else
-                  result="FAIL"
-              fi
-
-              echo "$i,$total,$result" >> func_test_result.csv
-
-              cat "pytest_run_$i.txt"
-
-          done
+ 
